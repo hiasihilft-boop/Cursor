@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hiasi hilft vor Ort – Auftragsbestätigung</title>
+  <meta name="theme-color" content="#4a9c2d" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Werkzeugleiste (wird beim Drucken ausgeblendet) -->
+  <div class="toolbar no-print">
+    <div class="toolbar-inner">
+      <span class="toolbar-title">Hiasi hilft vor Ort · Auftragsbestätigung</span>
+      <div class="toolbar-actions">
+        <button type="button" id="btn-new" class="btn">Neuer Auftrag</button>
+        <button type="button" id="btn-save" class="btn btn-primary">Speichern</button>
+        <button type="button" id="btn-print" class="btn">Drucken / PDF</button>
+        <button type="button" id="btn-list" class="btn">Aufträge</button>
+      </div>
+    </div>
+  </div>
+
+  <main class="sheet" id="sheet">
+    <!-- Kopf -->
+    <header class="head">
+      <div class="head-logo" aria-hidden="true">
+        <div class="logo-badge">🧑‍🔧</div>
+      </div>
+      <div class="head-title">
+        <h1>Hiasi hilft <span class="accent">vor Ort</span></h1>
+        <p class="slogan">„Hiasi packt's an – schnell, zuverlässig, ohne viel Gerede!“</p>
+        <p class="area">📍 Mering &amp; Umgebung · Auch am Wochenende</p>
+      </div>
+    </header>
+
+    <div class="band">
+      <span class="band-title">Auftragsbestätigung</span>
+      <span class="band-fields">
+        <label>Nr.
+          <input type="text" id="f-nr" class="inl" inputmode="numeric" />
+        </label>
+        <label>Datum
+          <input type="date" id="f-datum" class="inl" />
+        </label>
+        <label>Uhrzeit
+          <input type="time" id="f-uhrzeit" class="inl" />
+        </label>
+      </span>
+    </div>
+
+    <!-- Kunde -->
+    <section class="row">
+      <label class="field">
+        <span class="lbl">Auftraggeber / Kunde</span>
+        <input type="text" id="f-kunde" placeholder="Name des Kunden" />
+      </label>
+      <label class="field">
+        <span class="lbl">Objekt / Ort der Arbeiten</span>
+        <input type="text" id="f-objekt" placeholder="z. B. Gartenanlage …" />
+      </label>
+    </section>
+
+    <!-- Leistungsbeschreibung -->
+    <section class="block">
+      <div class="block-head">
+        <span class="lbl">Leistungsbeschreibung</span>
+        <button type="button" class="btn btn-mini no-print" id="btn-add-leistung">+ Position</button>
+      </div>
+      <ul class="leistungen" id="leistungen"></ul>
+    </section>
+
+    <!-- Mitbringen / Material -->
+    <section class="block">
+      <span class="lbl">Mitbringen / Material</span>
+      <textarea id="f-material" rows="2" placeholder="z. B. 2 Sack Erde 60L, 2 Sack Rindenmulch"></textarea>
+    </section>
+
+    <!-- Kontakt + Abrechnung -->
+    <section class="two-col">
+      <div class="col">
+        <label class="field">
+          <span class="lbl">E-Mail Kunde</span>
+          <input type="email" id="f-email" placeholder="name@example.de" />
+        </label>
+        <label class="field">
+          <span class="lbl">Telefon Kunde</span>
+          <input type="tel" id="f-telefon" placeholder="Telefonnummer" />
+        </label>
+        <label class="field">
+          <span class="lbl">Anfahrt / Material / Sonstiges</span>
+          <input type="text" id="f-sonstiges" placeholder="Notiz" />
+        </label>
+      </div>
+      <div class="col abrechnung">
+        <span class="lbl">Art der Abrechnung</span>
+        <div class="art">
+          <label class="radio"><input type="radio" name="art" value="pauschal" id="art-pauschal" /> Pauschal</label>
+          <label class="radio"><input type="radio" name="art" value="stundensatz" id="art-stundensatz" checked /> Stundensatz</label>
+        </div>
+        <label class="field betrag-field">
+          <span class="lbl">Betrag</span>
+          <span class="betrag-input">
+            <input type="number" id="f-betrag" step="0.01" min="0" placeholder="0,00" />
+            <select id="f-betrag-einheit">
+              <option value="/h">€ / h</option>
+              <option value="pauschal">€ pauschal</option>
+            </select>
+          </span>
+        </label>
+        <div class="gesamt">
+          <span class="lbl">Gesamtbetrag (gem. § 19 UStG ohne MwSt.)</span>
+          <div class="gesamt-value"><span id="f-gesamt">—</span> €</div>
+          <label class="field stunden-field">
+            <span class="lbl">Geschätzte Stunden (optional)</span>
+            <input type="number" id="f-stunden" step="0.25" min="0" placeholder="z. B. 4" />
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <p class="hinweis">Hinweise auf Rückseite beachten!</p>
+
+    <!-- Einverständnis -->
+    <section class="einverstaendnis">
+      <h2>Einverständnis</h2>
+      <p>Ich habe die Hinweise gelesen und verstanden und beauftrage <strong>Hiasi hilft vor Ort</strong>
+        mit der genannten Leistung zum genannten Preis.</p>
+
+      <div class="signatures">
+        <div class="sig">
+          <label class="field">
+            <span class="lbl">Ort, Datum</span>
+            <input type="text" id="f-ortdatum" placeholder="Ort, Datum" />
+          </label>
+        </div>
+        <div class="sig">
+          <span class="lbl">Unterschrift Auftraggeber (Kunde)</span>
+          <div class="sig-pad" data-sig="kunde">
+            <canvas id="sig-kunde" width="600" height="160"></canvas>
+            <button type="button" class="btn btn-mini sig-clear no-print" data-clear="kunde">Löschen</button>
+          </div>
+        </div>
+        <div class="sig">
+          <span class="lbl">Unterschrift Auftragnehmer (Hiasi)</span>
+          <div class="sig-pad" data-sig="hiasi">
+            <canvas id="sig-hiasi" width="600" height="160"></canvas>
+            <button type="button" class="btn btn-mini sig-clear no-print" data-clear="hiasi">Löschen</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Fußzeile -->
+    <footer class="foot">
+      <div>Matthias Müller · Bürgermeister-Koeniger-Straße 12 · 86415 Mering</div>
+      <div class="foot-right">Kleingewerbe gemäß § 19 UStG · keine Umsatzsteuer</div>
+    </footer>
+  </main>
+
+  <!-- Auftrags-Liste (Overlay) -->
+  <div class="overlay no-print" id="overlay" hidden>
+    <div class="overlay-box">
+      <div class="overlay-head">
+        <h2>Gespeicherte Aufträge</h2>
+        <button type="button" class="btn btn-mini" id="btn-close-list">Schließen</button>
+      </div>
+      <ul class="auftrag-list" id="auftrag-list"></ul>
+      <p class="hint">Die Aufträge werden nur lokal auf diesem Gerät gespeichert.</p>
+    </div>
+  </div>
+
+  <div class="toast no-print" id="toast" hidden></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

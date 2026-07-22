@@ -1,0 +1,322 @@
+:root {
+  --green: #4a9c2d;
+  --green-dark: #3c7f24;
+  --orange: #f39200;
+  --ink: #1f2a1a;
+  --muted: #6b7a63;
+  --line: #cfd8c8;
+  --bg: #eef1ea;
+  --sheet: #ffffff;
+  --radius: 10px;
+  --shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+/* ---------- Toolbar ---------- */
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--green);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+.toolbar-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 10px 16px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  justify-content: space-between;
+}
+.toolbar-title { font-weight: 700; }
+.toolbar-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.btn {
+  appearance: none;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.btn:hover { background: rgba(255, 255, 255, 0.25); }
+.btn-primary { background: var(--orange); border-color: var(--orange); font-weight: 700; }
+.btn-primary:hover { background: #d98200; }
+.btn-mini {
+  padding: 3px 10px;
+  font-size: 13px;
+  border-radius: 6px;
+  background: var(--green);
+  border: 1px solid var(--green-dark);
+}
+.btn-mini:hover { background: var(--green-dark); }
+
+/* ---------- Sheet ---------- */
+.sheet {
+  max-width: 820px;
+  margin: 20px auto 60px;
+  background: var(--sheet);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 24px 28px 20px;
+}
+
+/* ---------- Head ---------- */
+.head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-bottom: 4px solid var(--green);
+  padding-bottom: 12px;
+}
+.logo-badge {
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  background: var(--orange);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  box-shadow: inset 0 0 0 4px rgba(255, 255, 255, 0.5);
+}
+.head-title h1 {
+  margin: 0;
+  font-size: 30px;
+  color: var(--green);
+  letter-spacing: 0.5px;
+}
+.head-title h1 .accent { color: var(--orange); }
+.slogan { margin: 4px 0 2px; font-style: italic; color: var(--muted); font-size: 14px; }
+.area { margin: 0; color: var(--green-dark); font-size: 13px; font-weight: 600; }
+
+/* ---------- Band ---------- */
+.band {
+  margin-top: 14px;
+  background: var(--green);
+  color: #fff;
+  border-radius: 6px;
+  padding: 8px 14px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.band-title { font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+.band-fields { display: flex; gap: 14px; flex-wrap: wrap; }
+.band-fields label { font-size: 13px; display: flex; align-items: center; gap: 6px; }
+.inl {
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+  background: transparent;
+  color: #fff;
+  padding: 2px 4px;
+  font-size: 14px;
+  width: 120px;
+}
+.inl::-webkit-calendar-picker-indicator { filter: invert(1); }
+#f-nr { width: 60px; }
+
+/* ---------- Fields ---------- */
+.lbl {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--green-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin-bottom: 3px;
+}
+input, textarea, select {
+  font-family: inherit;
+  font-size: 16px;
+  color: var(--ink);
+}
+.field input,
+textarea,
+.betrag-input input {
+  width: 100%;
+  border: none;
+  border-bottom: 1.5px solid var(--line);
+  background: transparent;
+  padding: 6px 2px;
+  outline: none;
+}
+.field input:focus,
+textarea:focus { border-bottom-color: var(--orange); }
+textarea { border: 1.5px solid var(--line); border-radius: 6px; padding: 8px; resize: vertical; }
+
+.row, .two-col {
+  display: grid;
+  gap: 18px;
+  margin-top: 16px;
+}
+.row { grid-template-columns: 1fr 1fr; }
+.two-col { grid-template-columns: 1fr 1fr; }
+.block { margin-top: 16px; }
+.block-head { display: flex; align-items: center; justify-content: space-between; }
+
+/* ---------- Leistungen ---------- */
+.leistungen { list-style: none; margin: 6px 0 0; padding: 0; }
+.leistungen li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+  border-bottom: 1px dashed var(--line);
+}
+.leistungen li::before { content: "•"; color: var(--green); font-weight: 900; }
+.leistungen li input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 4px 2px;
+  outline: none;
+}
+.leistungen li .del {
+  border: none;
+  background: transparent;
+  color: #c0392b;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  padding: 0 4px;
+}
+
+/* ---------- Abrechnung ---------- */
+.abrechnung { background: #f6f9f3; border-radius: 8px; padding: 12px 14px; }
+.art { display: flex; gap: 18px; margin-bottom: 10px; }
+.radio { display: flex; align-items: center; gap: 6px; font-size: 15px; }
+.betrag-input { display: flex; gap: 8px; align-items: center; }
+.betrag-input select { border: 1.5px solid var(--line); border-radius: 6px; padding: 6px; background: #fff; }
+.betrag-field { margin-bottom: 10px; }
+.gesamt { border-top: 1px solid var(--line); padding-top: 10px; }
+.gesamt-value { font-size: 22px; font-weight: 800; color: var(--green-dark); }
+.stunden-field { margin-top: 8px; }
+
+.hinweis {
+  text-align: center;
+  color: #c0392b;
+  font-weight: 700;
+  margin: 18px 0 6px;
+}
+
+/* ---------- Einverständnis ---------- */
+.einverstaendnis { margin-top: 8px; border-top: 2px solid var(--line); padding-top: 12px; }
+.einverstaendnis h2 { font-size: 16px; color: var(--green-dark); text-transform: uppercase; margin: 0 0 6px; }
+.einverstaendnis p { font-size: 14px; margin: 0 0 14px; }
+
+.signatures { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.sig-pad { position: relative; }
+.sig-pad canvas {
+  width: 100%;
+  height: 90px;
+  border: 1.5px solid var(--line);
+  border-radius: 6px;
+  background: #fff;
+  touch-action: none;
+}
+.sig-clear { position: absolute; top: 4px; right: 4px; }
+
+/* ---------- Foot ---------- */
+.foot {
+  margin-top: 20px;
+  border-top: 4px solid var(--green);
+  padding-top: 8px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 11px;
+  color: var(--muted);
+  flex-wrap: wrap;
+}
+
+/* ---------- Overlay / Liste ---------- */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 40;
+  padding: 16px;
+}
+.overlay-box {
+  background: #fff;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 520px;
+  max-height: 80vh;
+  overflow: auto;
+  padding: 18px;
+}
+.overlay-head { display: flex; justify-content: space-between; align-items: center; }
+.overlay-head h2 { margin: 0; color: var(--green-dark); font-size: 18px; }
+.auftrag-list { list-style: none; margin: 12px 0; padding: 0; }
+.auftrag-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+.auftrag-list .meta { display: flex; flex-direction: column; }
+.auftrag-list .meta strong { color: var(--ink); }
+.auftrag-list .meta small { color: var(--muted); }
+.auftrag-list .actions { display: flex; gap: 6px; }
+.hint { font-size: 12px; color: var(--muted); text-align: center; }
+
+/* ---------- Toast ---------- */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--ink);
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 8px;
+  z-index: 50;
+  box-shadow: var(--shadow);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 680px) {
+  .row, .two-col, .signatures { grid-template-columns: 1fr; }
+  .sheet { margin: 12px; padding: 16px; }
+  .head-title h1 { font-size: 24px; }
+  .toolbar-title { display: none; }
+  .toolbar-actions { width: 100%; justify-content: space-between; }
+}
+
+/* ---------- Print ---------- */
+@media print {
+  .no-print { display: none !important; }
+  body { background: #fff; }
+  .sheet { box-shadow: none; margin: 0; max-width: 100%; border-radius: 0; padding: 0; }
+  input, textarea, select { border-color: #999 !important; }
+  .abrechnung { background: #fff; }
+  @page { margin: 12mm; }
+}
