@@ -226,6 +226,48 @@
     recomputeGesamt();
   }
 
+  // Erster, fest bestätigter Auftrag (Erica Biechler) als Startdatensatz.
+  function ersterAuftrag() {
+    return {
+      nr: "1",
+      datum: "2026-07-20",
+      uhrzeit: "",
+      kunde: "Erica Biechler",
+      objekt: "Gartenanlage Tochtermann Garten",
+      leistungen: [
+        "Magnolie auslichten / formen",
+        "Rosenbogen formen",
+        "Bambus schneiden, wenn möglich raus",
+        "12 Eibenhecke schneiden / ausdünnen",
+        "Hasel hinter Gartenhaus raus",
+        "Strauch hinter Dusche raus",
+      ],
+      material: "2 Sack Erde 60L, 2 Sack Rindenmulch",
+      email: "freu.bie@t-online.de",
+      telefon: "0821/156713",
+      sonstiges: "",
+      art: "stundensatz",
+      betrag: "40",
+      betragEinheit: "/h",
+      stunden: "",
+      ortdatum: "",
+      sigKunde: "",
+      sigHiasi: "",
+      gespeichert: new Date("2026-07-20T00:00:00").toISOString(),
+    };
+  }
+
+  // Legt den ersten Auftrag einmalig an (nur wenn noch nichts gespeichert ist).
+  function seedErsterAuftrag() {
+    const list = loadStore();
+    if (list.length > 0) return false;
+    if (parseInt(localStorage.getItem(NR_KEY) || "1", 10) !== 1) return false;
+    const seed = ersterAuftrag();
+    saveStore([seed]);
+    localStorage.setItem(NR_KEY, "2");
+    return true;
+  }
+
   function newAuftrag() {
     apply({ leistungen: [""] });
     $("#f-nr").value = String(nextNr());
@@ -341,7 +383,12 @@
       })
     );
 
-    newAuftrag();
+    if (seedErsterAuftrag()) {
+      // Erstaufruf: bestätigten Auftrag Nr. 1 gleich anzeigen.
+      apply(ersterAuftrag());
+    } else {
+      newAuftrag();
+    }
   }
 
   document.addEventListener("DOMContentLoaded", init);
