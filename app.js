@@ -238,7 +238,7 @@
         "Magnolie auslichten / formen",
         "Rosenbogen formen",
         "Bambus schneiden, wenn möglich raus",
-        "12 Eibenhecke schneiden / ausdünnen",
+        "12 Meter Eibenhecke schneiden / ausdünnen",
         "Hasel hinter Gartenhaus raus",
         "Strauch hinter Dusche raus",
       ],
