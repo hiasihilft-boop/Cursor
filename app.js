@@ -27,7 +27,13 @@
     }
   }
   function saveStore(list) {
-    localStorage.setItem(STORE_KEY, JSON.stringify(list));
+    try {
+      localStorage.setItem(STORE_KEY, JSON.stringify(list));
+      return true;
+    } catch (e) {
+      toast("Speicher voll – Beleg evtl. zu groß.");
+      return false;
+    }
   }
 
   function nextNr() {
@@ -156,6 +162,86 @@
     };
   }
 
+  // ---------- Beleg (Foto / PDF anhängen) ----------
+  let belegData = null; // { name, type, dataUrl }
+
+  function renderBeleg() {
+    const box = $("#beleg-preview");
+    const removeBtn = $("#btn-beleg-remove");
+    box.innerHTML = "";
+    if (!belegData) {
+      const span = document.createElement("span");
+      span.className = "beleg-empty";
+      span.textContent =
+        "Kein Beleg angehängt. Du kannst den handschriftlichen Zettel abfotografieren oder ein PDF anhängen.";
+      box.appendChild(span);
+      removeBtn.hidden = true;
+      return;
+    }
+    removeBtn.hidden = false;
+    if (belegData.type && belegData.type.indexOf("image/") === 0) {
+      const img = document.createElement("img");
+      img.src = belegData.dataUrl;
+      img.alt = "Original-Beleg";
+      box.appendChild(img);
+    } else {
+      const a = document.createElement("a");
+      a.className = "beleg-file";
+      a.href = belegData.dataUrl;
+      a.target = "_blank";
+      a.rel = "noopener";
+      a.innerHTML =
+        '<span class="doc-icon">📄</span><span>' +
+        (belegData.name || "Beleg (PDF)") +
+        '</span><span class="open-hint">öffnen</span>';
+      box.appendChild(a);
+    }
+  }
+
+  // Fotos vor dem Speichern verkleinern (spart Speicherplatz).
+  function readImageDownscaled(file, cb) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const img = new Image();
+      img.onload = () => {
+        const max = 1600;
+        let w = img.width;
+        let h = img.height;
+        const scale = Math.min(1, max / Math.max(w, h));
+        w = Math.round(w * scale);
+        h = Math.round(h * scale);
+        const c = document.createElement("canvas");
+        c.width = w;
+        c.height = h;
+        c.getContext("2d").drawImage(img, 0, 0, w, h);
+        cb(c.toDataURL("image/jpeg", 0.75));
+      };
+      img.onerror = () => cb(reader.result); // Fallback: Original verwenden
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function handleBelegFile(file) {
+    if (!file) return;
+    if (file.type.indexOf("image/") === 0) {
+      readImageDownscaled(file, (dataUrl) => {
+        belegData = { name: file.name, type: "image/jpeg", dataUrl: dataUrl };
+        renderBeleg();
+      });
+    } else {
+      const reader = new FileReader();
+      reader.onload = () => {
+        belegData = { name: file.name, type: file.type || "application/pdf", dataUrl: reader.result };
+        renderBeleg();
+        if (reader.result && reader.result.length > 3_500_000) {
+          toast("Großer Beleg – beim Speichern kann der Platz knapp werden.");
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
   // ---------- Betrag / Gesamt ----------
   function recomputeGesamt() {
     const betrag = parseFloat($("#f-betrag").value);
@@ -194,6 +280,7 @@
       betragEinheit: $("#f-betrag-einheit").value,
       stunden: $("#f-stunden").value,
       ortdatum: $("#f-ortdatum").value.trim(),
+      beleg: belegData,
       sigKunde: pads.kunde ? pads.kunde.toDataURL() : "",
       sigHiasi: pads.hiasi ? pads.hiasi.toDataURL() : "",
       gespeichert: new Date().toISOString(),
@@ -216,6 +303,9 @@
     $("#f-betrag-einheit").value = d.betragEinheit || "/h";
     $("#f-stunden").value = d.stunden || "";
     $("#f-ortdatum").value = d.ortdatum || "";
+
+    belegData = d.beleg || null;
+    renderBeleg();
 
     $("#leistungen").innerHTML = "";
     const list = d.leistungen && d.leistungen.length ? d.leistungen : [""];
@@ -375,6 +465,15 @@
     $$('input[name="art"]').forEach((r) => r.addEventListener("change", syncEinheitMitArt));
     ["f-betrag", "f-stunden"].forEach((id) => $("#" + id).addEventListener("input", recomputeGesamt));
     $("#f-betrag-einheit").addEventListener("change", recomputeGesamt);
+
+    $("#f-beleg").addEventListener("change", (e) => {
+      handleBelegFile(e.target.files && e.target.files[0]);
+      e.target.value = ""; // erlaubt erneutes Wählen derselben Datei
+    });
+    $("#btn-beleg-remove").addEventListener("click", () => {
+      belegData = null;
+      renderBeleg();
+    });
 
     $$(".sig-clear").forEach((b) =>
       b.addEventListener("click", () => {

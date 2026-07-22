@@ -76,6 +76,23 @@
       <textarea id="f-material" rows="2" placeholder="z. B. 2 Sack Erde 60L, 2 Sack Rindenmulch"></textarea>
     </section>
 
+    <!-- Original-Beleg (Foto oder PDF) -->
+    <section class="block">
+      <div class="block-head">
+        <span class="lbl">Original-Beleg (Foto oder PDF)</span>
+        <span class="beleg-actions no-print">
+          <label class="btn btn-mini beleg-upload">
+            Datei wählen
+            <input type="file" id="f-beleg" accept="image/*,application/pdf" hidden />
+          </label>
+          <button type="button" class="btn btn-mini" id="btn-beleg-remove" hidden>Entfernen</button>
+        </span>
+      </div>
+      <div class="beleg-preview" id="beleg-preview">
+        <span class="beleg-empty">Kein Beleg angehängt. Du kannst den handschriftlichen Zettel abfotografieren oder ein PDF anhängen.</span>
+      </div>
+    </section>
+
     <!-- Kontakt + Abrechnung -->
     <section class="two-col">
       <div class="col">

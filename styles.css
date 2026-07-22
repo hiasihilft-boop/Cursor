@@ -201,6 +201,32 @@ textarea { border: 1.5px solid var(--line); border-radius: 6px; padding: 8px; re
   padding: 0 4px;
 }
 
+/* ---------- Beleg ---------- */
+.beleg-actions { display: flex; gap: 6px; }
+.beleg-upload { display: inline-flex; align-items: center; }
+.beleg-preview { margin-top: 8px; }
+.beleg-empty { color: var(--muted); font-size: 13px; }
+.beleg-preview img {
+  max-width: 100%;
+  max-height: 420px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  display: block;
+}
+.beleg-file {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #f6f9f3;
+  text-decoration: none;
+  color: var(--ink);
+}
+.beleg-file .doc-icon { font-size: 22px; }
+.beleg-file .open-hint { color: var(--green-dark); font-size: 12px; }
+
 /* ---------- Abrechnung ---------- */
 .abrechnung { background: #f6f9f3; border-radius: 8px; padding: 12px 14px; }
 .art { display: flex; gap: 18px; margin-bottom: 10px; }

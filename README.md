@@ -15,6 +15,10 @@ und anschließend gedruckt bzw. als PDF gespeichert werden können.
 - **Abrechnung** wahlweise Pauschal oder Stundensatz; bei Stundensatz wird der
   Gesamtbetrag aus Stundensatz × geschätzten Stunden berechnet
   (gem. § 19 UStG ohne Umsatzsteuer).
+- **Original-Beleg anhängen:** den handschriftlichen Zettel abfotografieren oder
+  ein PDF hochladen – wird beim Auftrag mit gespeichert (Fotos werden zum
+  Platzsparen automatisch verkleinert). Es findet **keine** automatische
+  Texterkennung statt, damit keine Daten an externe KI-Dienste gehen.
 - **Unterschriften** (Kunde + Hiasi) direkt per Finger/Maus auf dem Bildschirm.
 - **Speichern** der Aufträge lokal im Browser (localStorage) – inkl. laufender
   Auftragsnummer.
